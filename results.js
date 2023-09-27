@@ -41,19 +41,6 @@ async function displayResults(results) {
   }
 }
 
-// const dansk = disipliner[engelsk];
-// const disipliner = {
-//   breaststroke: "bryst",
-//   backstroke: "ryg",
-//   freestyle: "fristil",
-//   butterfly: "butterfly",
-// };
-
-// const træningsType = {
-//   competition: "stævne",
-//   training: "træning",
-// };
-
 function constructResult(resultdata) {
   const ResultObject = {
     dato: new Date(resultdata.date),
