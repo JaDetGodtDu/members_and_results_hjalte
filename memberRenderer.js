@@ -9,7 +9,7 @@ const MemberRenderer = {
       });
     const html = /*html*/ `
     <tr>
-      <td>${member.getFulleName()}</td>
+      <td>${member.getFullName()}</td>
       <td>${member.active ? "Active" : "Not Active"}</td>
       <td>${formattedBirthday}</td>
       <td>${member.getAge()}</td>

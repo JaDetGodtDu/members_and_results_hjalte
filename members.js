@@ -17,10 +17,10 @@ async function fetchMembers() {
 }
 
 async function buildMembersList() {
-  const originalObjects = await fetchMembers();
+  const members = await fetchMembers();
 
-  for (const orgobj of originalObjects) {
-    const memberObj = constructMember(orgobj);
+  for (const member of members) {
+    const memberObj = constructMember(member);
     members.push(memberObj);
   }
 }
@@ -59,7 +59,7 @@ function constructMember(memberdata) {
         return "senior";
       }
     },
-    getFulleName() {
+    getFullName() {
       const fullName = `${this.name} ${this.lastName}`;
       return fullName;
     },

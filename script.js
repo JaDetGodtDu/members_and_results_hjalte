@@ -8,6 +8,6 @@ window.addEventListener("load", initApp);
 
 async function initApp() {
   initTabs();
-  membersMain(MemberRenderer);
-  resultsMain(ResultRenderer);
+  await membersMain(MemberRenderer);
+  await resultsMain(ResultRenderer);
 }

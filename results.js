@@ -17,35 +17,27 @@ async function fetchResults() {
   return data;
 }
 
-async function buildResultsList() {
-  const originalObjects = await fetchResults();
+async function fetchMembers() {
+  const resp = await fetch("data/members.json");
+  const data = await resp.json();
 
-  for (const orgobj of originalObjects) {
-    const resultsObj = constructResult(orgobj);
-    results.push(resultsObj);
+  return data
+}
+
+async function buildResultsList() {
+  const resultsList = await fetchResults();
+  const memberList = await fetchMembers()
+
+  for (const result of resultsList) {
+    const memberObj = memberList.find((member) => member.id === result.memberId)
+    if (memberObj != undefined) {
+      const resultsObj = constructResult(result, memberObj);
+      results.push(resultsObj);
+    }
   }
 }
-// async function displayResults(results) {
-//   //   const sortedResults = Array.from(results.values()).sort((a, b) => fromTimeToMillis(a.tid) - fromTimeToMillis(b.tid));
-//   const table = document.querySelector("#results tbody");
-//   table.innerHTML = "";
 
-//   for (const result of results) {
-//     const memberName = await result.getMemberName(); // Vent på, at promise bliver løst
-
-//     const html = /*html*/ `
-
-//       <td>${result.dato.toLocaleDateString("da")}</td>
-//       <td>${memberName}</td>
-//       <td>${result.translateDisciplin()}</td>
-//       <td>${result.resultType()}</td>
-//       <td>${result.time}</td>
-//     </tr>`;
-
-//     table.insertAdjacentHTML("beforeend", html);
-//   }
-// }
-function constructResult(resultdata) {
+function constructResult(resultdata, memberData) {
   const ResultObject = {
     dato: new Date(resultdata.date),
     id: resultdata.id,
@@ -53,6 +45,8 @@ function constructResult(resultdata) {
     type: resultdata.resultType,
     time: resultdata.time,
     memberId: resultdata.memberId,
+    memberFirstName: memberData.firstName,
+    memberLastName: memberData.lastName,
     isCompetition() {
       return this.type === "competition";
     },
@@ -84,17 +78,10 @@ function constructResult(resultdata) {
         return "træning";
       }
     },
-    async getMemberName() {
-      const resp = await fetch("data/members.json");
-      const data = await resp.json();
-
-      for (const member of data) {
-        if (member.id === this.memberId) {
-          return `${member.firstName} ${member.lastName}`;
-        }
-      }
-      return "Ukendt";
-    },
+    memberFullName() {
+      let memberFullName = `${this.memberFirstName} ${this.memberLastName}`
+      return memberFullName
+    }
   };
   Object.defineProperties(ResultObject, {
     id: {
