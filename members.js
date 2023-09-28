@@ -1,6 +1,9 @@
+import * as listRenderer from "./listRenderer.js";
+
 async function membersMain() {
   await buildMembersList();
-  displayMembers(members);
+  const memberList = listRenderer.construct(members);
+  memberList.render();
 }
 
 const members = [];
@@ -17,26 +20,6 @@ async function buildMembersList() {
   for (const orgobj of originalObjects) {
     const memberObj = constructMember(orgobj);
     members.push(memberObj);
-  }
-}
-
-function displayMembers(members) {
-  const table = document.querySelector("#members tbody");
-  table.innerHTML = "";
-  for (const member of members) {
-    const formattedBirthday = member.birthday.toLocaleDateString(undefined, { weekday: "short", year: "numeric", month: "numeric", day: "numeric" });
-
-    const html = /*html*/ `
-    <tr>
-      <td>${member.getFulleName()}</td>
-      <td>${member.active ? "Active" : "Not Active"}</td>
-      <td>${formattedBirthday}</td>
-      <td>${member.getAge()}</td>
-      <td>${member.getJuniorSeniorStatus()}</td>
-      <td>${member.email}</td>
-    </tr>`;
-
-    table.insertAdjacentHTML("beforeend", html);
   }
 }
 
