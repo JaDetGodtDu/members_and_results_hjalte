@@ -1,11 +1,9 @@
 import * as listRenderer from "./listRenderer.js";
 
-const members = [];
-
 const membersContainer = document.getElementById("members");
 
 async function membersMain(itemRenderer) {
-  await buildMembersList();
+  const members = await buildMembersList();
   const memberList = listRenderer.construct(members, membersContainer, itemRenderer);
   memberList.render();
 }
@@ -17,12 +15,15 @@ async function fetchMembers() {
 }
 
 async function buildMembersList() {
-  const members = await fetchMembers();
+  const members = [];
+  const membersList = await fetchMembers();
 
-  for (const member of members) {
+  for (const member of membersList) {
     const memberObj = constructMember(member);
     members.push(memberObj);
   }
+
+  return members
 }
 
 function constructMember(memberdata) {

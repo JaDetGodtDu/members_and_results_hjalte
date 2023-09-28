@@ -1,11 +1,9 @@
 import * as listRenderer from "./listRenderer.js";
 
-const results = [];
-
 const resultsContainer = document.getElementById("results")
 
 async function resultsMain(itemRenderer) {
-  await buildResultsList();
+  const results=await buildResultsList();
   const resultList = listRenderer.construct(results, resultsContainer, itemRenderer)
   resultList.render()
 }
@@ -25,6 +23,7 @@ async function fetchMembers() {
 }
 
 async function buildResultsList() {
+  const results = []
   const resultsList = await fetchResults();
   const memberList = await fetchMembers()
 
@@ -35,6 +34,7 @@ async function buildResultsList() {
       results.push(resultsObj);
     }
   }
+  return results
 }
 
 function constructResult(resultdata, memberData) {
