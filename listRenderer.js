@@ -1,5 +1,5 @@
 function construct(list, container, itemRenderer) {
-  const listRenderer = {
+  const ListRenderer = {
     render() {
       const table = document.querySelector("#members tbody");
       table.innerHTML = "";
@@ -28,7 +28,7 @@ function construct(list, container, itemRenderer) {
       }
     },
   };
-  return listRenderer;
+  return ListRenderer;
 }
 
 export { construct };

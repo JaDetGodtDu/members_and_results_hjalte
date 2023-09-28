@@ -1,0 +1,3 @@
+const MemberRenderer = {
+  render(member) {},
+};
