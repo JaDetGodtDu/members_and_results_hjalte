@@ -28,7 +28,7 @@ function displayMembers(members) {
 
     const html = /*html*/ `
     <tr>
-      <td>${member.name}</td>
+      <td>${member.getFulleName()}</td>
       <td>${member.active ? "Active" : "Not Active"}</td>
       <td>${formattedBirthday}</td>
       <td>${member.getAge()}</td>
@@ -51,6 +51,8 @@ function constructMember(memberdata) {
     image: memberdata.image,
     hasPayed: memberdata.hasPayed,
     id: memberdata.id,
+    lastName: memberdata.lastName,
+    fullName: "",
     getAge() {
       const today = new Date();
       const age = today.getFullYear() - this.birthday.getFullYear();
@@ -71,6 +73,10 @@ function constructMember(memberdata) {
       } else if (age >= 18) {
         return "senior";
       }
+    },
+    getFulleName() {
+      const fullName = `${this.name} ${this.lastName}`;
+      return fullName;
     },
   };
 
