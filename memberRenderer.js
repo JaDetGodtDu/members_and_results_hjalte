@@ -1,6 +1,14 @@
 const MemberRenderer = {
-  render(member) {
+  render() {
     const member = this.item
+    const formattedBirthday = member.birthday.toLocaleDateString(
+      undefined,
+      {
+        weekday: "short",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+      });
     const html = /*html*/ `
     <tr>
       <td>${member.getFulleName()}</td>
