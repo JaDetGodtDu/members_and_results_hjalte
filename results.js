@@ -1,9 +1,14 @@
-async function resultsMain() {
-  await buildResultsList();
-  displayResults(results);
-}
+import * as listRenderer from "./listRenderer.js";
 
 const results = [];
+
+const resultsContainer = document.getElementById("results")
+
+async function resultsMain(itemRenderer) {
+  await buildResultsList();
+  const resultList = listRenderer.construct(results, resultsContainer, itemRenderer)
+  resultList.render()
+}
 
 async function fetchResults() {
   const resp = await fetch("data/results.json");
@@ -20,27 +25,26 @@ async function buildResultsList() {
     results.push(resultsObj);
   }
 }
-async function displayResults(results) {
-  //   const sortedResults = Array.from(results.values()).sort((a, b) => fromTimeToMillis(a.tid) - fromTimeToMillis(b.tid));
-  const table = document.querySelector("#results tbody");
-  table.innerHTML = "";
+// async function displayResults(results) {
+//   //   const sortedResults = Array.from(results.values()).sort((a, b) => fromTimeToMillis(a.tid) - fromTimeToMillis(b.tid));
+//   const table = document.querySelector("#results tbody");
+//   table.innerHTML = "";
 
-  for (const result of results) {
-    const memberName = await result.getMemberName(); // Vent på, at promise bliver løst
+//   for (const result of results) {
+//     const memberName = await result.getMemberName(); // Vent på, at promise bliver løst
 
-    const html = /*html*/ `
+//     const html = /*html*/ `
 
-      <td>${result.dato.toLocaleDateString("da")}</td>
-      <td>${memberName}</td>
-      <td>${result.translateDisciplin()}</td>
-      <td>${result.resultType()}</td>
-      <td>${result.time}</td>
-    </tr>`;
+//       <td>${result.dato.toLocaleDateString("da")}</td>
+//       <td>${memberName}</td>
+//       <td>${result.translateDisciplin()}</td>
+//       <td>${result.resultType()}</td>
+//       <td>${result.time}</td>
+//     </tr>`;
 
-    table.insertAdjacentHTML("beforeend", html);
-  }
-}
-
+//     table.insertAdjacentHTML("beforeend", html);
+//   }
+// }
 function constructResult(resultdata) {
   const ResultObject = {
     dato: new Date(resultdata.date),

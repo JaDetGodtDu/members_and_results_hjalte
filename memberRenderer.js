@@ -1,9 +1,7 @@
 const MemberRenderer = {
-  render() {
-    const member = this.item
+  render(member) {
     const formattedBirthday = member.birthday.toLocaleDateString(
-      undefined,
-      {
+      undefined,{
         weekday: "short",
         year: "numeric",
         month: "numeric",
@@ -21,4 +19,4 @@ const MemberRenderer = {
     return html
   },
 };
-export default MemberRenderer
+export { MemberRenderer }

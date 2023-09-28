@@ -1,12 +1,14 @@
 import * as listRenderer from "./listRenderer.js";
 
-async function membersMain() {
+const members = [];
+
+const membersContainer = document.getElementById("members");
+
+async function membersMain(itemRenderer) {
   await buildMembersList();
-  const memberList = listRenderer.construct(members);
+  const memberList = listRenderer.construct(members, membersContainer, itemRenderer);
   memberList.render();
 }
-
-const members = [];
 
 async function fetchMembers() {
   const resp = await fetch("./data/members.json");
