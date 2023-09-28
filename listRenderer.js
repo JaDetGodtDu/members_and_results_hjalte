@@ -1,3 +1,5 @@
+import * as MemberRenderer from "./MemberRenderer.js"
+
 function construct(list, container, itemRenderer) {
   const ListRenderer = {
     render() {
